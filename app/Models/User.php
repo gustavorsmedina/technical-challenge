@@ -18,7 +18,7 @@ class User extends Model
         'email',
         'password',
         'user_type',
-        'user_status',
+        'status',
     ];
 
     protected $hidden = [
@@ -26,7 +26,12 @@ class User extends Model
     ];
 
     protected $casts = [
-        'user_type'   => UserType::class,
-        'user_status' => UserStatus::class,
+        'user_type' => UserType::class,
+        'status'    => UserStatus::class,
     ];
+
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
+    }
 }
