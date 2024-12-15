@@ -41,6 +41,10 @@ class AbstractRepository implements RepositoryInterface
 
     public function delete($id): void
     {
-        //
+        $user = $this->model->find($id);
+
+        $user->status     = 'inactive';
+        $user->updated_at = now();
+        $user->save();
     }
 }
