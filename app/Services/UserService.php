@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Exceptions\UserAlreadyExistsException;
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Exceptions\{UserAlreadyExistsException, UserNotFoundException};
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,12 +28,29 @@ class UserService
 
         $userExists = $this->userRepository->findByEmailOrDocument($data['email'], $document);
 
-        if($userExists){
+        if ($userExists) {
             throw new UserAlreadyExistsException();
         }
 
         $data['password'] = Hash::make($data['password']);
 
         return $this->userRepository->save($data);
+    }
+
+    public function getAllUsers(array $params): LengthAwarePaginator
+    {
+        return $this->userRepository->findAll($params);
+    }
+
+    public function getUser(string $id): User
+    {
+
+        $user = $this->userRepository->findById($id);
+
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+
+        return $user;
     }
 }

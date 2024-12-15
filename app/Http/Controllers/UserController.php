@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\GustavoException;
-use App\Exceptions\UserAlreadyExistsException;
-use App\Exceptions\UserNotFoundException;
 use App\Http\Requests\UserStoreRequest;
 use App\Services\UserService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\{JsonResponse, Request};
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends Controller
 {
@@ -22,7 +17,14 @@ class UserController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        //
+        $params = [
+            'per_page' => $request->perPage ?? 10,
+            'page'     => $request->page ?? 1,
+        ];
+
+        $users = $this->userService->getAllUsers($params);
+
+        return response()->json($users, 200);
     }
 
     public function store(UserStoreRequest $request): JsonResponse
@@ -36,7 +38,9 @@ class UserController extends Controller
 
     public function show(string $id)
     {
-        //
+        $user = $this->userService->getUser($id);
+
+        return response()->json($user, 200);
     }
 
     public function update(Request $request, string $id)
