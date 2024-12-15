@@ -5,18 +5,18 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Http\{JsonResponse, Request};
 
-class UserAlreadyExistsException extends Exception
+class UserNotFoundException extends Exception
 {
     public function render(Request $request): JsonResponse
     {
 
         return response()->json([
-            'status_code' => 422,
-            'message'     => "User already exists.",
+            'status_code' => 404,
+            'message'     => "User not found.",
             'timestamp'   => date('Y-m-d H:i:s'),
             'method'      => request()->method(),
             'path'        => request()->path(),
-        ], 422);
+        ], 404);
 
         return parent::render($request);
     }

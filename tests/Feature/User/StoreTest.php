@@ -7,16 +7,16 @@ it('should create a new user', function () {
 
     $response = $this->postJson('/api/users', [
         'full_name' => $user['full_name'],
-        'document' => $user['document'],
-        'email' => $user['email'],
-        'password' => 'secret',
+        'document'  => $user['document'],
+        'email'     => $user['email'],
+        'password'  => 'secret',
         'user_type' => $user['user_type'],
     ]);
 
     $response->assertStatus(201);
     $this->assertDatabaseHas('users', [
         'document' => $user['document'],
-        'email' => $user['email'],
+        'email'    => $user['email'],
     ]);
 });
 
@@ -26,9 +26,9 @@ describe('validations', function () {
 
         $response = $this->postJson('/api/users', [
             'full_name' => $user->full_name,
-            'document' => $user->document,
-            'email' => $user->email,
-            'password' => 'secret',
+            'document'  => $user->document,
+            'email'     => $user->email,
+            'password'  => 'secret',
             'user_type' => $user->user_type,
         ]);
 
@@ -36,4 +36,3 @@ describe('validations', function () {
     });
 
 });
-
