@@ -37,14 +37,14 @@ class UserController extends Controller
             ->header('Location', route('users.show', ['user' => $user->id]));
     }
 
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $user = $this->userService->getUser($id);
 
         return response()->json($user, 200);
     }
 
-    public function update(UserUpdateRequest $request, string $id)
+    public function update(UserUpdateRequest $request, string $id): JsonResponse
     {
         $data = $request->validated();
 
@@ -53,8 +53,10 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'data' => $user], 200);
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
-        //
+        $this->userService->deleteUser($id);
+
+        return response()->json(null, 204);
     }
 }
