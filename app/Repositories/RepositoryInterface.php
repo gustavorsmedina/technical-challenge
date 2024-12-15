@@ -13,7 +13,7 @@ interface RepositoryInterface
 
     public function findAll(array $params): LengthAwarePaginator;
 
-    public function update($id): Model;
+    public function update($id, $data): Model;
 
     public function delete($id): void;
 

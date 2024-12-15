@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\{UserStoreRequest, UserUpdateRequest};
 use App\Services\UserService;
 use Illuminate\Http\{JsonResponse, Request};
 
@@ -33,7 +33,8 @@ class UserController extends Controller
 
         $user = $this->userService->createUser($data);
 
-        return response()->json(['status' => 'success', 'data' => $user], 201);
+        return response()->json(['status' => 'success', 'data' => $user], 201)
+            ->header('Location', route('users.show', ['user' => $user->id]));
     }
 
     public function show(string $id)
@@ -43,9 +44,13 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
-    public function update(Request $request, string $id)
+    public function update(UserUpdateRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+
+        $user = $this->userService->updateUser($id, $data);
+
+        return response()->json(['status' => 'success', 'data' => $user], 200);
     }
 
     public function destroy(string $id)

@@ -12,7 +12,7 @@ class UserNotFoundException extends Exception
 
         return response()->json([
             'status_code' => 404,
-            'message'     => "User not found.",
+            'message'     => $this->message ?? 'User not found.',
             'timestamp'   => date('Y-m-d H:i:s'),
             'method'      => request()->method(),
             'path'        => request()->path(),

@@ -12,7 +12,7 @@ class UserAlreadyExistsException extends Exception
 
         return response()->json([
             'status_code' => 422,
-            'message'     => "User already exists.",
+            'message'     => $this->message ?? 'User already exists.',
             'timestamp'   => date('Y-m-d H:i:s'),
             'method'      => request()->method(),
             'path'        => request()->path(),
