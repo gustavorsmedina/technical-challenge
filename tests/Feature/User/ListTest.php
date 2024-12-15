@@ -14,7 +14,6 @@ it('should list user with id that was searched', function () {
     ]);
 });
 
-
 it('should return 404 if the user doesnt exist', function () {
     $response = $this->get('/api/users/1');
 
@@ -29,4 +28,3 @@ it('should list all users', function () {
     $response->assertStatus(200);
     $response->assertJsonCount(2, 'data');
 });
-

@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use Illuminate\Pagination\LengthAwarePaginator;
 use App\Exceptions\{UserAlreadyExistsException, UserNotFoundException};
+use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -52,5 +52,24 @@ class UserService
         }
 
         return $user;
+    }
+
+    public function updateUser(string $id, array $data): User
+    {
+        $user = $this->userRepository->findById($id);
+
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+
+        if (isset($data['document']) || isset($data['email'])) {
+            $userExists = $this->userRepository->findByEmailOrDocument($data['email'], $data['document']);
+
+            if ($userExists) {
+                throw new UserAlreadyExistsException("The document or email already exists.");
+            }
+        }
+
+        return $this->userRepository->update($id, $data);
     }
 }

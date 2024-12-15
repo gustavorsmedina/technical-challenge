@@ -29,13 +29,18 @@ class AbstractRepository implements RepositoryInterface
         return $this->model->paginate($params['per_page'], ['*'], 'page', $params['page']);
     }
 
-    public function update($id): Model
+    public function update($id, $data): Model
     {
-        // TODO: Implement update() method.
+        $user = $this->model->find($id);
+
+        $user->update($data);
+        $user->refresh();
+
+        return $user;
     }
 
     public function delete($id): void
     {
-        // TODO: Implement delete() method.
+        //
     }
 }
