@@ -39,7 +39,6 @@ class RabbitMQListener extends Command
 
         $callback = function ($message) {
             $data = json_decode($message->body, true);
-            echo "\n json_decode: ", json_encode($data), "\n";
             echo "---------------------------------------------\n";
             echo " [x] Received ", $message->body, "\n";
             echo "Sending notification...\n";
