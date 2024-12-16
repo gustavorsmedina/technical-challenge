@@ -16,3 +16,4 @@ Route::post('wallets/credit', [WalletController::class, 'credit'])->name('wallet
 Route::post('wallets/debit', [WalletController::class, 'debit'])->name('wallets.debit');
 
 Route::post('transactions', [TransactionController::class, 'store'])->name('transactions.store');
+Route::get('transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');

@@ -45,7 +45,7 @@ class UserService
     public function getUser(string $id): User
     {
 
-        $user = $this->userRepository->findById($id);
+        $user = $this->userRepository->findWithWallet($id);
 
         if (!$user) {
             throw new UserNotFoundException();

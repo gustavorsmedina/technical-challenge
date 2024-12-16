@@ -27,7 +27,9 @@ class TransactionController extends Controller
 
     public function show(string $id)
     {
-        //
+        $transaction = $this->transactionService->getTransaction($id);
+
+        return response()->json($transaction, 200);
     }
 
 }
