@@ -84,7 +84,7 @@ Marque (yes) para que ele crie o banco de dados e as tabelas
 
 ## 📨 Requisições
 
-### Todas requisições estão no arquivo: [Collection](./Technical Challenge.postman_collection.json)
+### Todas requisições estão no arquivo: [Collection](./Technical%20Challenge.postman_collection.json)
 
 ---
 ### Usuários
