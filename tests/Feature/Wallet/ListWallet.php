@@ -1,16 +1,15 @@
 <?php
 
-use App\Models\Wallet;
-use App\Models\User;
+use App\Models\{User, Wallet};
 
 it('should list wallet with id that was searched', function () {
     $user = User::factory()->create();
 
     $wallet = Wallet::factory()->create([
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ]);
 
-    $id   = $wallet->id;
+    $id = $wallet->id;
 
     $response = $this->get("/api/wallets/$id");
 

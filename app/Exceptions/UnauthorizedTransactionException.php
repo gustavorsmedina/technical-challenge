@@ -5,18 +5,18 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Http\{JsonResponse, Request};
 
-class UserAlreadyHasWalletException extends Exception
+class UnauthorizedTransactionException extends Exception
 {
     public function render(Request $request): JsonResponse
     {
 
         return response()->json([
-            'status_code' => 422,
-            'message'     => $this->message ? $this->message : 'User already has a wallet',
+            'status_code' => 400,
+            'message'     => $this->message ? $this->message : 'Unauthorized transaction.',
             'timestamp'   => date('Y-m-d H:i:s'),
             'method'      => request()->method(),
             'path'        => request()->path(),
-        ], 422);
+        ], 400);
 
         return parent::render($request);
     }
