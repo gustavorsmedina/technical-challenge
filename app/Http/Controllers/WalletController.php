@@ -15,7 +15,7 @@ class WalletController extends Controller
         $this->walletService = $walletService;
     }
 
-    public function store(WalletStoreRequest $request)
+    public function store(WalletStoreRequest $request): JsonResponse
     {
         $data = $request->validated();
 

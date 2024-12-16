@@ -21,9 +21,9 @@ class UserRepository extends AbstractRepository
         return $this->model->where('email', $email)->orWhere('document', $document)->first();
     }
 
-    public function findWithWallet(int $id): User
+    public function findWithWallet(int $id): ?User
     {
-        return $this->model->with('wallet')->findOrFail($id);
+        return $this->model->with('wallet')->find($id);
     }
 
 }

@@ -68,9 +68,10 @@ class WalletService
             throw new UserNotActiveException();
         }
 
-        $wallet->balance += $data['value'];
-        $wallet->updated_at = now();
-        $wallet->save();
+        $this->walletRepository->update($wallet->id, [
+            'balance'    => $wallet->balance += $data['value'],
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
 
         return $wallet;
     }
@@ -91,9 +92,10 @@ class WalletService
             throw new InsufficientBalanceException();
         }
 
-        $wallet->balance -= $data['value'];
-        $wallet->updated_at = date('Y-m-d H:i:s');
-        $wallet->save();
+        $this->walletRepository->update($wallet->id, [
+            'balance'    => $wallet->balance -= $data['value'],
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
 
         return $wallet;
     }

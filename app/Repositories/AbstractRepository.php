@@ -45,7 +45,7 @@ class AbstractRepository implements RepositoryInterface
         $model = $this->model->find($id);
 
         $model->status     = 'inactive';
-        $model->updated_at = now();
+        $model->updated_at = date('Y-m-d H:i:s');
         $model->save();
     }
 }

@@ -14,12 +14,15 @@ use App\Exceptions\{InsufficientBalanceException,
     UserNotFoundException,
     WalletNotFoundException};
 use App\Models\Transaction;
-use App\Repositories\{TransactionRepository, UserRepository};
+use App\Repositories\{TransactionRepository, UserRepository, WalletRepository};
+use Exception;
 use Illuminate\Support\Facades\{DB, Log};
 
 class TransactionService
 {
     private TransactionRepository $transactionRepository;
+
+    private WalletRepository $walletRepository;
 
     private UserRepository $userRepository;
 
@@ -31,12 +34,14 @@ class TransactionService
         TransactionRepository $transactionRepository,
         UserRepository $userRepository,
         AuthorizerService $authorizerService,
-        RabbitMQ $rabbitMQ
+        RabbitMQ $rabbitMQ,
+        WalletRepository $walletRepository
     ) {
         $this->transactionRepository = $transactionRepository;
         $this->userRepository        = $userRepository;
         $this->authorizerService     = $authorizerService;
         $this->rabbitMQ              = $rabbitMQ;
+        $this->walletRepository      = $walletRepository;
     }
 
     public function createTransaction(array $data): Transaction
@@ -54,14 +59,17 @@ class TransactionService
 
         try {
             DB::transaction(function () use ($transaction, $payer, $payee, $data) {
-                $payer->wallet->balance -= $data['value'];
-                $payee->wallet->balance += $data['value'];
 
-                $payer->wallet->save();
-                $payee->wallet->save();
+                $this->walletRepository->update(
+                    $payer->wallet->id,
+                    ['balance' => $payer->wallet->balance -= $data['value']]
+                );
+                $this->walletRepository->update(
+                    $payee->wallet->id,
+                    ['balance' => $payee->wallet->balance += $data['value']]
+                );
 
-                $transaction->status = TransactionStatus::SUCCESS;
-                $transaction->save();
+                $this->transactionRepository->update($transaction->id, ['status' => TransactionStatus::SUCCESS]);
             });
 
             $this->rabbitMQ->send('notifications', $data);
@@ -69,8 +77,8 @@ class TransactionService
 
         } catch (Exception $e) {
             Log::error('Transaction failed.', $transaction->toArray());
-            $transaction->status = TransactionStatus::FAILED;
-            $transaction->save();
+
+            $this->transactionRepository->update($transaction->id, ['status' => TransactionStatus::FAILED]);
 
             throw new TransactionFailedException();
         }
@@ -114,8 +122,8 @@ class TransactionService
         $authorize = $this->authorizerService->authorize();
 
         if (!$authorize) {
-            $transaction->status = TransactionStatus::UNAUTHORIZED;
-            $transaction->save();
+
+            $this->transactionRepository->update($transaction->id, ['status' => TransactionStatus::UNAUTHORIZED]);
 
             throw new UnauthorizedTransactionException();
         }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionStoreRequest;
 use App\Services\TransactionService;
+use Illuminate\Http\JsonResponse;
 
 class TransactionController extends Controller
 {
@@ -14,7 +15,7 @@ class TransactionController extends Controller
         $this->transactionService = $transactionService;
     }
 
-    public function store(TransactionStoreRequest $request)
+    public function store(TransactionStoreRequest $request): JsonResponse
     {
 
         $data = $request->validated();
@@ -25,7 +26,7 @@ class TransactionController extends Controller
 
     }
 
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $transaction = $this->transactionService->getTransaction($id);
 
