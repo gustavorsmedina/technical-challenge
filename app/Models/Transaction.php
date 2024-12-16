@@ -15,6 +15,7 @@ class Transaction extends Model
         'payer',
         'payee',
         'value',
+        'status',
     ];
 
     public function payer()

@@ -61,11 +61,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{url}}/users",
+									"raw": "http://localhost/api/users",
+									"protocol": "http",
 									"host": [
-										"{{url}}"
+										"localhost"
 									],
 									"path": [
+										"api",
 										"users"
 									]
 								}
@@ -142,7 +144,7 @@
 					},
 					"response": [
 						{
-							"name": "Response",
+							"name": "Response no wallet",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -187,7 +189,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Mon, 16 Dec 2024 02:50:02 GMT"
+									"value": "Mon, 16 Dec 2024 15:03:38 GMT"
 								},
 								{
 									"key": "Access-Control-Allow-Origin",
@@ -203,7 +205,71 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"id\": 1,\n    \"full_name\": \"Gustavo Medina\",\n    \"document\": \"12345678900\",\n    \"email\": \"gustavo@account.com\",\n    \"user_type\": \"common\",\n    \"status\": \"active\",\n    \"created_at\": \"2024-12-16T02:49:41.000000Z\",\n    \"updated_at\": \"2024-12-16T02:49:41.000000Z\"\n}"
+							"body": "{\n    \"id\": 1,\n    \"full_name\": \"Gustavo Medina\",\n    \"document\": \"12345678900\",\n    \"email\": \"gustavo@account.com\",\n    \"user_type\": \"common\",\n    \"status\": \"active\",\n    \"created_at\": \"2024-12-16T15:03:32.000000Z\",\n    \"updated_at\": \"2024-12-16T15:03:32.000000Z\",\n    \"wallet\": null\n}"
+						},
+						{
+							"name": "Response with wallet",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.27.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.14"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Dec 2024 15:04:44 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"full_name\": \"Gustavo Medina\",\n    \"document\": \"12345678900\",\n    \"email\": \"gustavo@account.com\",\n    \"user_type\": \"common\",\n    \"status\": \"active\",\n    \"created_at\": \"2024-12-16T15:03:32.000000Z\",\n    \"updated_at\": \"2024-12-16T15:03:32.000000Z\",\n    \"wallet\": {\n        \"id\": 1,\n        \"user_id\": 1,\n        \"balance\": \"0.00\",\n        \"created_at\": \"2024-12-16T15:04:41.000000Z\",\n        \"updated_at\": \"2024-12-16T15:04:41.000000Z\"\n    }\n}"
 						}
 					]
 				},
@@ -229,11 +295,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/users",
+									"raw": "http://localhost/api/users",
+									"protocol": "http",
 									"host": [
-										"{{url}}"
+										"localhost"
 									],
 									"path": [
+										"api",
 										"users"
 									]
 								}
@@ -365,11 +433,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{url}}/users/1",
+									"raw": "http://localhost/api/users/1",
+									"protocol": "http",
 									"host": [
-										"{{url}}"
+										"localhost"
 									],
 									"path": [
+										"api",
 										"users",
 										"1"
 									]
@@ -470,11 +540,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{url}}/wallets",
+									"raw": "http://localhost/api/wallets",
+									"protocol": "http",
 									"host": [
-										"{{url}}"
+										"localhost"
 									],
 									"path": [
+										"api",
 										"wallets"
 									]
 								}
@@ -556,11 +628,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/wallets/1",
+									"raw": "http://localhost/api/wallets/1",
+									"protocol": "http",
 									"host": [
-										"{{url}}"
+										"localhost"
 									],
 									"path": [
+										"api",
 										"wallets",
 										"1"
 									]
@@ -669,11 +743,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{url}}/wallets/credit",
+									"raw": "http://localhost/api/wallets/credit",
+									"protocol": "http",
 									"host": [
-										"{{url}}"
+										"localhost"
 									],
 									"path": [
+										"api",
 										"wallets",
 										"credit"
 									]
@@ -782,11 +858,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{url}}/wallets/debit",
+									"raw": "http://localhost/api/wallets/debit",
+									"protocol": "http",
 									"host": [
-										"{{url}}"
+										"localhost"
 									],
 									"path": [
+										"api",
 										"wallets",
 										"debit"
 									]
@@ -899,11 +977,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{url}}/transactions",
+									"raw": "http://localhost/api/transactions",
+									"protocol": "http",
 									"host": [
-										"{{url}}"
+										"localhost"
 									],
 									"path": [
+										"api",
 										"transactions"
 									]
 								}
@@ -957,6 +1037,89 @@
 							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"payer\": 1,\n        \"payee\": 2,\n        \"value\": 5,\n        \"updated_at\": \"2024-12-16T02:52:10.000000Z\",\n        \"created_at\": \"2024-12-16T02:52:10.000000Z\",\n        \"id\": 2,\n        \"status\": \"success\"\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "Get transaction",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/transactions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"transactions",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/transactions/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"transactions",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.27.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.14"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Dec 2024 15:06:40 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"payer\": {\n        \"id\": 1,\n        \"full_name\": \"Gustavo Medina\",\n        \"document\": \"12345678900\",\n        \"email\": \"gustavo@account.com\",\n        \"user_type\": \"common\",\n        \"status\": \"active\",\n        \"created_at\": \"2024-12-16T15:03:32.000000Z\",\n        \"updated_at\": \"2024-12-16T15:03:32.000000Z\"\n    },\n    \"payee\": {\n        \"id\": 2,\n        \"full_name\": \"Gustavo Silva\",\n        \"document\": \"12345678901\",\n        \"email\": \"gustavosilva@account.com\",\n        \"user_type\": \"common\",\n        \"status\": \"active\",\n        \"created_at\": \"2024-12-16T15:05:11.000000Z\",\n        \"updated_at\": \"2024-12-16T15:05:11.000000Z\"\n    },\n    \"value\": \"5.00\",\n    \"status\": \"success\",\n    \"created_at\": \"2024-12-16T15:06:36.000000Z\",\n    \"updated_at\": \"2024-12-16T15:06:37.000000Z\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -982,11 +1145,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/ping",
+							"raw": "http://localhost/api/ping",
+							"protocol": "http",
 							"host": [
-								"{{url}}"
+								"localhost"
 							],
 							"path": [
+								"api",
 								"ping"
 							]
 						}

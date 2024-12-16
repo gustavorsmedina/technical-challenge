@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Exceptions\{UserAlreadyExistsException, UserNotFoundException};
+use App\Exceptions\{InvalidDocumentException, UserAlreadyExistsException, UserNotFoundException};
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -23,7 +23,7 @@ class UserService
         $document = preg_replace('/[^0-9]/', '', $data['document']);
 
         if (!in_array(strlen($document), [11, 14])) {
-            throw new Exception('Invalid CPF/CNPJ.', 422);
+            throw new InvalidDocumentException();
         }
 
         $userExists = $this->userRepository->findByEmailOrDocument($data['email'], $document);
