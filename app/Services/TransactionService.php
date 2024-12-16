@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Brokers\RabbitMQ;
 use App\Enums\{TransactionStatus, UserStatus, UserType};
 use App\Exceptions\{InsufficientBalanceException,
     MerchantTransactionNotAllowedException,
@@ -23,14 +24,18 @@ class TransactionService
 
     private AuthorizerService $authorizerService;
 
+    private RabbitMQ $rabbitMQ;
+
     public function __construct(
         TransactionRepository $transactionRepository,
         UserRepository $userRepository,
-        AuthorizerService $authorizerService
+        AuthorizerService $authorizerService,
+        RabbitMQ $rabbitMQ
     ) {
         $this->transactionRepository = $transactionRepository;
         $this->userRepository        = $userRepository;
         $this->authorizerService     = $authorizerService;
+        $this->rabbitMQ              = $rabbitMQ;
     }
 
     public function createTransaction(array $data): Transaction
@@ -58,6 +63,7 @@ class TransactionService
                 $transaction->save();
             });
 
+            $this->rabbitMQ->send('notifications', $data);
             Log::info('Transaction success. Sending notification...', $transaction->toArray());
 
         } catch (Exception $e) {

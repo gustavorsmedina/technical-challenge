@@ -21,7 +21,8 @@ class WalletController extends Controller
 
         $wallet = $this->walletService->createWallet($data);
 
-        return response()->json(['message' => 'success', 'data' => $wallet], 201);
+        return response()->json(['message' => 'success', 'data' => $wallet], 201)
+            ->header('Location', route('wallets.show', ['wallet' => $wallet->id]));
     }
 
     public function show(string $id): JsonResponse
