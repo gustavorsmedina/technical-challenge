@@ -12,7 +12,7 @@ class UserNotActiveException extends Exception
 
         return response()->json([
             'status_code' => 400,
-            'message'     => $this->message ?? 'User is not active.',
+            'message'     => $this->message ? $this->message : 'User is not active.',
             'timestamp'   => date('Y-m-d H:i:s'),
             'method'      => request()->method(),
             'path'        => request()->path(),

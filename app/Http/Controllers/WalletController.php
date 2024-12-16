@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\WalletStoreRequest;
+use App\Http\Requests\{WalletOperationRequest, WalletStoreRequest};
 use App\Services\WalletService;
 use Illuminate\Http\JsonResponse;
 
@@ -29,5 +29,23 @@ class WalletController extends Controller
         $wallet = $this->walletService->getWallet($id);
 
         return response()->json($wallet, 200);
+    }
+
+    public function credit(WalletOperationRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $wallet = $this->walletService->creditWallet($data);
+
+        return response()->json(['status' => 'success', 'data' => $wallet], 200);
+    }
+
+    public function debit(WalletOperationRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $wallet = $this->walletService->debitWallet($data);
+
+        return response()->json(['status' => 'success', 'data' => $wallet], 200);
     }
 }

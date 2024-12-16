@@ -31,20 +31,21 @@ class AbstractRepository implements RepositoryInterface
 
     public function update($id, $data): Model
     {
-        $user = $this->model->find($id);
 
-        $user->update($data);
-        $user->refresh();
+        $model = $this->model->find($id);
 
-        return $user;
+        $model->update($data);
+        $model->refresh();
+
+        return $model;
     }
 
     public function delete($id): void
     {
-        $user = $this->model->find($id);
+        $model = $this->model->find($id);
 
-        $user->status     = 'inactive';
-        $user->updated_at = now();
-        $user->save();
+        $model->status     = 'inactive';
+        $model->updated_at = now();
+        $model->save();
     }
 }

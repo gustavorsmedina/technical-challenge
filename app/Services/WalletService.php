@@ -3,7 +3,8 @@
 namespace App\Services;
 
 use App\Enums\UserStatus;
-use App\Exceptions\{UserAlreadyHasWalletException,
+use App\Exceptions\{InsufficientBalanceException,
+    UserAlreadyHasWalletException,
     UserNotActiveException,
     UserNotFoundException,
     WalletNotFoundException};
@@ -51,6 +52,48 @@ class WalletService
         if (!$wallet) {
             throw new WalletNotFoundException();
         }
+
+        return $wallet;
+    }
+
+    public function creditWallet(array $data): Wallet
+    {
+        $wallet = $this->walletRepository->findWalletWithUser($data['wallet_id']);
+
+        if (!$wallet) {
+            throw new WalletNotFoundException();
+        }
+
+        if ($wallet->user->status == UserStatus::INACTIVE) {
+            throw new UserNotActiveException();
+        }
+
+        $wallet->balance += $data['value'];
+        $wallet->updated_at = now();
+        $wallet->save();
+
+        return $wallet;
+    }
+
+    public function debitWallet(array $data): Wallet
+    {
+        $wallet = $this->walletRepository->findWalletWithUser($data['wallet_id']);
+
+        if (!$wallet) {
+            throw new WalletNotFoundException();
+        }
+
+        if ($wallet->user->status == UserStatus::INACTIVE) {
+            throw new UserNotActiveException();
+        }
+
+        if ($wallet->balance < $data['value']) {
+            throw new InsufficientBalanceException();
+        }
+
+        $wallet->balance -= $data['value'];
+        $wallet->updated_at = date('Y-m-d H:i:s');
+        $wallet->save();
 
         return $wallet;
     }
