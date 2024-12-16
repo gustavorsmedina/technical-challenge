@@ -16,4 +16,11 @@ class WalletRepository extends AbstractRepository
         return $this->model->where('user_id', $userId)->first();
     }
 
+    public function findWalletWithUser($id): ?Wallet
+    {
+        $wallet = Wallet::with('user')->find($id);
+
+        return $wallet;
+    }
+
 }
