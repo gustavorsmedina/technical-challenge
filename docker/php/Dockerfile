@@ -5,14 +5,14 @@ RUN apk add --no-cache \
     curl \
     libpng-dev \
     libzip-dev \
-    zlib-dev
-
-RUN docker-php-ext-install gd \
-    && docker-php-ext-install zip
+    zlib-dev \
+    mysql-client \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install zip \
+    && docker-php-ext-install pdo pdo_mysql
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
 EXPOSE 9000
-
