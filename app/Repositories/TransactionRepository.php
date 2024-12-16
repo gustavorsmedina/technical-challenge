@@ -10,4 +10,9 @@ class TransactionRepository extends AbstractRepository
     {
         parent::__construct($model);
     }
+
+    public function findTransactionWithPayerAndPayee(int $id): Transaction
+    {
+        return $this->model->with('payer', 'payee')->findOrFail($id);
+    }
 }

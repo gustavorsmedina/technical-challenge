@@ -8,6 +8,7 @@ use App\Exceptions\{InsufficientBalanceException,
     MerchantTransactionNotAllowedException,
     SelfTransactionNotAllowedException,
     TransactionFailedException,
+    TransactionNotFoundException,
     UnauthorizedTransactionException,
     UserNotActiveException,
     UserNotFoundException,
@@ -118,5 +119,16 @@ class TransactionService
 
             throw new UnauthorizedTransactionException();
         }
+    }
+
+    public function getTransaction(string $id): Transaction
+    {
+        $transaction = $this->transactionRepository->findTransactionWithPayerAndPayee($id);
+
+        if (!$transaction) {
+            throw new TransactionNotFoundException();
+        }
+
+        return $transaction;
     }
 }
