@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WalletStoreRequest;
 use App\Services\WalletService;
+use Illuminate\Http\JsonResponse;
 
 class WalletController extends Controller
 {
@@ -23,8 +24,10 @@ class WalletController extends Controller
         return response()->json(['message' => 'success', 'data' => $wallet], 201);
     }
 
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        //
+        $wallet = $this->walletService->getWallet($id);
+
+        return response()->json($wallet, 200);
     }
 }

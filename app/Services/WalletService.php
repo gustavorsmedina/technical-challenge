@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Enums\UserStatus;
-use App\Exceptions\{UserAlreadyHasWalletException, UserNotActiveException, UserNotFoundException};
+use App\Exceptions\{UserAlreadyHasWalletException,
+    UserNotActiveException,
+    UserNotFoundException,
+    WalletNotFoundException};
 use App\Models\{Wallet};
 use App\Repositories\{UserRepository, WalletRepository};
 
@@ -39,6 +42,17 @@ class WalletService
         }
 
         return $this->walletRepository->save($data);
+    }
+
+    public function getWallet(string $id): Wallet
+    {
+        $wallet = $this->walletRepository->findWalletWithUser($id);
+
+        if (!$wallet) {
+            throw new WalletNotFoundException();
+        }
+
+        return $wallet;
     }
 
 }
